@@ -6,6 +6,10 @@ import './product.dart';
 import '../models/http_exception.dart';
 
 class Products with ChangeNotifier {
+  final String authToken;
+
+  Products(this.authToken, this._items);
+
   List<Product> _items = [];
 
   Product findById(String id) {
@@ -21,8 +25,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url =
-        'https://flutter-2e761-default-rtdb.firebaseio.com/products.json';
+    final url =
+        'https://flutter-2e761-default-rtdb.firebaseio.com/products.json?auth=$authToken';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -48,8 +52,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const url =
-        'https://flutter-2e761-default-rtdb.firebaseio.com/products.json';
+    final url =
+        'https://flutter-2e761-default-rtdb.firebaseio.com/products.json?auth=$authToken';
 
     try {
       final response = await http.post(
@@ -83,7 +87,7 @@ class Products with ChangeNotifier {
     final productIndex = _items.indexWhere((product) => product.id == id);
     if (productIndex >= 0) {
       final url =
-          'https://flutter-2e761-default-rtdb.firebaseio.com/products/$id.json';
+          'https://flutter-2e761-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken';
 
       await http.patch(Uri.parse(url),
           body: json.encode({
@@ -101,7 +105,7 @@ class Products with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     final url =
-        'https://flutter-2e761-default-rtdb.firebaseio.com/products/$id.json';
+        'https://flutter-2e761-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken';
 
     final existingProductIndex =
         _items.indexWhere((product) => product.id == id);
