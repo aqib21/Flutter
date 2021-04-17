@@ -9,7 +9,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Chat'),
+        title: const Text('Flutter Chat'),
         actions: [
           DropdownButton(
             underline: Container(),
@@ -29,7 +29,7 @@ class ChatScreen extends StatelessWidget {
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Logout'),
+                      const Text('Logout'),
                     ],
                   ),
                 ),
